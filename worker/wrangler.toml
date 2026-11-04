@@ -8,4 +8,4 @@ ALLOWED_ORIGIN = "https://saebyeolkim.github.io"
 
 [[kv_namespaces]]
 binding = "TRIP"
-id = "REPLACE_AFTER_KV_CREATE"
+id = "fc2efa8ef68d4625abebb4d146e20d2c"
