@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f7f5">
+<title>가족여행</title>
+<style>
+:root{--bg:#f6f7f5;--paper:#fff;--ink:#202b33;--muted:#73808a;--line:#e7ebe8;--green:#47776c;--green2:#eaf2ef;--sand:#f3eee5;--navy:#263b4a;--shadow:0 8px 24px rgba(31,48,57,.06)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;line-height:1.55}
+button,a{font:inherit}a{color:inherit;text-decoration:none}.wrap{max-width:760px;margin:auto;padding:0 16px 100px}
+.hero{padding:28px 0 18px}.eyebrow{font-size:11px;letter-spacing:.14em;color:var(--green);font-weight:800}.hero h1{font-size:27px;line-height:1.25;margin:8px 0 8px;letter-spacing:-.04em}.sub{color:var(--muted);font-size:13px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+.flight-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;box-shadow:var(--shadow)}
+.flight-top{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:10px}
+.flight-top span,.flight-status{font-size:10px;color:var(--green);background:var(--green2);padding:5px 8px;border-radius:7px;font-weight:800}
+.flight-booking{font-size:11px;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.flight-booking strong{color:var(--ink);font-size:12px;margin:0 5px}
+.flight-booking span{float:right}
+.flight-leg{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+.flight-leg small{display:block;color:var(--muted);font-size:10px}
+.flight-leg b{display:block;font-size:15px;margin:3px 0}
+.flight-leg b span{color:var(--green);padding:0 4px}
+.flight-leg em{font-style:normal;font-size:11px;color:var(--muted)}
+.flight-bottom{font-size:11px;color:var(--muted);padding-top:10px}
+.flight-bottom strong{color:var(--ink);letter-spacing:.04em}
+.flight-note{font-size:10px;color:#8a6d42;background:#faf5eb;padding:8px 10px;border-radius:8px;margin:10px 0 0}
+.chip{font-size:11px;padding:6px 10px;border-radius:99px;background:var(--green2);color:var(--green);font-weight:700}.heroimg{height:190px;border-radius:18px;margin-top:18px;overflow:hidden;background:linear-gradient(120deg,#9bafa4,#e6d9c4);position:relative}.heroimg img{width:100%;height:100%;object-fit:cover;display:block}.heroimg:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,30,37,.42),transparent 55%)}.hero-caption{position:absolute;z-index:1;bottom:14px;left:16px;color:#fff;font-weight:700;font-size:13px}
+.section-title{font-size:17px;font-weight:800;letter-spacing:-.03em;margin:27px 0 13px}.daynav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:sticky;top:0;z-index:10;background:rgba(246,247,245,.94);backdrop-filter:blur(12px);padding:10px 0}.daybtn{border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px 5px;color:var(--muted);font-size:12px;font-weight:700}.daybtn b{display:block;font-size:14px;color:var(--ink)}.daybtn.active{background:var(--navy);border-color:var(--navy);color:#dbe6e9}.daybtn.active b{color:#fff}
+.daypanel{display:none}.daypanel.active{display:block}.dayhead{display:flex;align-items:flex-end;justify-content:space-between;margin:17px 0 12px}.dayhead h2{font-size:21px;margin:0;letter-spacing:-.04em}.dayhead p{margin:3px 0 0;color:var(--muted);font-size:12px}.daytag{font-size:11px;color:var(--green);background:var(--green2);border-radius:8px;padding:6px 9px;font-weight:800}
+.timeline{position:relative;margin:12px 0 0 5px;padding-left:20px;border-left:1px solid #d8e2de}.item{position:relative;margin:0 0 18px}.item:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--green);left:-25px;top:7px;box-shadow:0 0 0 4px var(--bg)}.time{font-size:11px;font-weight:800;color:var(--green);letter-spacing:.02em}.item h3{font-size:15px;margin:2px 0 3px}.item p{font-size:12px;color:var(--muted);margin:0 0 8px}.item .meta{display:flex;gap:8px;flex-wrap:wrap}.pilllink{display:inline-flex;align-items:center;gap:5px;background:var(--green2);color:var(--green);padding:6px 9px;border-radius:8px;font-size:11px;font-weight:700}.pilllink.gray{background:#f1f3f4;color:#59656d}
+.photo-card{display:grid;grid-template-columns:104px 1fr;gap:12px;background:var(--paper);padding:9px;border-radius:14px;box-shadow:var(--shadow);margin:10px 0 14px}.photo-card img{width:104px;height:88px;object-fit:cover;border-radius:10px;background:#e5e9e6}.photo-card h4{margin:4px 0;font-size:13px}.photo-card p{font-size:11px;color:var(--muted);margin:0 0 7px}.transport{background:var(--sand);padding:13px 14px;border-radius:13px;margin:13px 0}.transport strong{font-size:12px}.transport p{font-size:12px;color:#6e6a62;margin:5px 0 0}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.info{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px}.info b{display:block;font-size:13px}.info span{font-size:11px;color:var(--muted)}
+.checklist{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.checkrow{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.checkrow:last-child{border:0}.checkrow input{accent-color:var(--green);width:18px;height:18px;margin:1px 0 0;flex:none}.checkrow small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.progress{height:6px;background:#edf0ee;border-radius:10px;overflow:hidden;margin:10px 0 4px}.progress>i{display:block;height:100%;width:0;background:var(--green);transition:width .2s}.mutednote{font-size:11px;color:var(--muted);margin-top:10px}
+.footer{margin-top:28px;text-align:center;color:var(--muted);font-size:11px}.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:20}.bottomin{max-width:760px;margin:auto;display:flex;gap:9px}.bottom a{flex:1;text-align:center;border-radius:11px;padding:11px;font-size:12px;font-weight:800;background:var(--navy);color:#fff}.bottom a.secondary{background:var(--green2);color:var(--green)}
+@media(min-width:600px){.heroimg{height:260px}.photo-card{grid-template-columns:130px 1fr}.photo-card img{width:130px;height:100px}.wrap{padding-left:22px;padding-right:22px}}
+
+.lock{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
+.lock h1{font-size:22px;margin:0;letter-spacing:-.04em}.lock p{margin:0;color:var(--muted);font-size:13px}
+.lock form{display:flex;gap:8px;margin-top:6px}.lock input{width:150px;padding:12px;border:1px solid var(--line);border-radius:11px;font-size:16px;text-align:center;letter-spacing:.3em}
+.lock button{border:0;border-radius:11px;background:var(--navy);color:#fff;padding:12px 18px;font-weight:800}.lock .err{color:#b3472f;min-height:18px;font-size:12px}
+</style>
+</head>
+<body>
+<div id="lock" class="lock">
+ <h1>가족여행</h1><p>PIN 번호를 입력해 주세요</p>
+ <form id="pinForm"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" aria-label="PIN"><button>확인</button></form>
+ <div class="err" id="err"></div>
+</div>
+<div class="wrap" id="app" hidden></div>
+<script>
+// 워커 주소: 배포 후 wrangler가 알려주는 주소로 바꿔 주세요.
+const API="https://kyoto-trip-api.REPLACE_ME.workers.dev/api/trip";
+const lock=document.getElementById("lock"),app=document.getElementById("app"),err=document.getElementById("err");
+function initTrip(){
+ const btns=[...document.querySelectorAll(".daybtn")],panels=[...document.querySelectorAll(".daypanel")];
+ btns.forEach(b=>b.addEventListener("click",()=>{btns.forEach(x=>x.classList.toggle("active",x===b));panels.forEach(p=>p.classList.toggle("active",p.id===b.dataset.day));window.scrollTo({top:document.querySelector(".daynav").offsetTop-4,behavior:"smooth"});}));
+ const checks=[...document.querySelectorAll(".checkrow input")],bar=document.getElementById("progressBar"),txt=document.getElementById("progressText");
+ function update(){const n=checks.filter(c=>c.checked).length;txt.textContent=n+" / "+checks.length+" 완료";bar.style.width=(n/checks.length*100)+"%";}
+ checks.forEach(c=>c.addEventListener("change",update));update();
+}
+async function load(pin){
+ try{
+  const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pin})});
+  if(!r.ok){err.textContent=r.status===401?"PIN이 맞지 않아요.":"불러오지 못했어요.";return false;}
+  const html=await r.text();
+  app.innerHTML=html;document.title="교토 가족여행";lock.hidden=true;app.hidden=false;initTrip();
+  try{sessionStorage.setItem("pin",pin)}catch(_){}
+  return true;
+ }catch(e){err.textContent="네트워크 오류가 발생했어요.";return false;}
+}
+document.getElementById("pinForm").addEventListener("submit",e=>{e.preventDefault();err.textContent="";load(document.getElementById("pin").value.trim());});
+try{const p=sessionStorage.getItem("pin");if(p)load(p);}catch(_){}
+</script>
+</body></html>

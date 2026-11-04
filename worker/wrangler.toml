@@ -1,0 +1,11 @@
+name = "kyoto-trip-api"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# GitHub Pages 주소(경로 제외). 예: https://saebyeolkim.github.io
+ALLOWED_ORIGIN = "https://saebyeolkim.github.io"
+
+[[kv_namespaces]]
+binding = "TRIP"
+id = "REPLACE_AFTER_KV_CREATE"
