@@ -1,16 +1,15 @@
-# 가족여행 사이트
+# 교토 가족여행 (2026.12.11–12.13)
 
-- `index.html` : GitHub Pages로 올라가는 화면(PIN 입력창만 있음, 일정 내용 없음)
-- `worker/` : Cloudflare Worker. PIN이 맞으면 KV의 일정 HTML을 내려줍니다.
-- `private/trip.html` : 실제 일정 내용. **저장소에 올라가지 않고**(.gitignore) KV에만 올립니다.
+아빠 · 남편 · 새별의 교토 2박 3일 여행 페이지. GitHub Pages로 호스팅되며 **PIN으로 잠겨 있습니다.**
 
-## 배포
+- `index.html` : 잠금 화면 + 암호화된 일정 (AES-GCM, PIN에서 PBKDF2로 키 생성). 저장소에는 암호문만 올라갑니다.
+- `lock.html` : 잠금 화면 템플릿
+- `build.mjs` : 원본을 암호화해 `index.html`을 만드는 스크립트
+- `private/trip.html` : 실제 일정 원본. **저장소에 올라가지 않습니다**(.gitignore).
+
+## 일정 수정 후 다시 만들기
 ```bash
-wrangler login
-cd worker
-wrangler kv namespace create TRIP     # 출력된 id를 wrangler.toml의 id에 붙여넣기
-wrangler secret put PIN               # PIN 입력
-wrangler kv key put trip --path ../private/trip.html --binding TRIP --remote
-wrangler deploy                       # 출력된 workers.dev 주소를 index.html의 API 값에 넣기
+node build.mjs <PIN>
+git add index.html && git commit -m "일정 업데이트" && git push
 ```
-일정 수정 후에는 `kv key put` 명령만 다시 실행하면 됩니다.
+- 숙소 주소: `private/trip.html` 하단 `STAY` 객체의 `address`만 바꾸면 지도·길찾기에 자동 반영됩니다.

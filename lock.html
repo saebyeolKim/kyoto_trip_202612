@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f5f2">
+<meta name="robots" content="noindex, nofollow">
+<title>교토 가족여행</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--bg:#f7f5f2;--paper:#fff;--ink:#1d2329;--sub:#5f6a73;--line:#e9e5df;--accent:#b6402f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121417;--paper:#1b1e22;--ink:#eef0f2;--sub:#aab2b9;--line:#2a2f35;--accent:#e8735f}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;min-height:100dvh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;padding:24px 16px}
+.box{width:100%;max-width:340px;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--accent)}
+h1{font-size:26px;letter-spacing:-.03em;margin:8px 0 6px}
+p{margin:0 0 24px;color:var(--sub);font-size:15px}
+input{width:100%;height:58px;border-radius:16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:24px;font-weight:700;text-align:center;letter-spacing:.4em;outline:none}
+input:focus{border-color:var(--ink)}
+button{margin-top:12px;width:100%;height:54px;border-radius:16px;border:0;background:var(--ink);color:var(--bg);font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.6}
+label{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:14px;font-size:14px;color:var(--sub)}
+label input{width:18px;height:18px;letter-spacing:0}
+.err{min-height:22px;margin-top:12px;font-size:14px;color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<form class="box" id="f" autocomplete="off">
+  <div class="eyebrow">KYOTO · FAMILY TRIP</div>
+  <h1>🔒 교토 가족여행</h1>
+  <p>가족에게 받은 PIN을 입력해 주세요</p>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="off" aria-label="PIN" autofocus>
+  <button id="go" type="submit">열기</button>
+  <label><input type="checkbox" id="keep" checked> 이 기기에서 기억하기</label>
+  <div class="err" id="err" role="alert"></div>
+</form>
+<script>
+const P = __PAYLOAD__;
+const KEY = "kyoto-trip-pin";
+const d64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function unlock(pin) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pin), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: d64(P.s), iterations: P.i, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: d64(P.v) }, key, d64(P.c));
+  return new TextDecoder().decode(pt);
+}
+function show(html) { document.open(); document.write(html); document.close(); }
+const f = document.getElementById("f"), go = document.getElementById("go"), err = document.getElementById("err");
+f.addEventListener("submit", async e => {
+  e.preventDefault();
+  const pin = document.getElementById("pin").value.trim();
+  if (!pin) return;
+  go.disabled = true; go.textContent = "여는 중…"; err.textContent = "";
+  try {
+    const html = await unlock(pin);
+    try { document.getElementById("keep").checked ? localStorage.setItem(KEY, pin) : localStorage.removeItem(KEY); } catch (_) {}
+    show(html);
+  } catch (_) {
+    err.textContent = "PIN이 맞지 않아요. 다시 입력해 주세요.";
+    go.disabled = false; go.textContent = "열기";
+  }
+});
+(async () => {
+  let saved = null; try { saved = localStorage.getItem(KEY); } catch (_) {}
+  if (!saved) return;
+  try { show(await unlock(saved)); } catch (_) { try { localStorage.removeItem(KEY); } catch (_) {} }
+})();
+</script>
+</body>
+</html>
